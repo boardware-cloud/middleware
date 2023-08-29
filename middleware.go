@@ -76,7 +76,7 @@ func GetAccount(c *gin.Context, next func(c *gin.Context, account core.Account))
 		return
 	}
 	var account core.Account
-	DB.Find(account, utils.UintToString(auth.AccountId))
+	DB.Find(&account, auth.AccountId)
 	next(c, account)
 }
 

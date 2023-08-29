@@ -44,8 +44,6 @@ type Headers struct {
 	Authorization string
 }
 
-type AuthenticationStatus string
-
 type Authentication struct {
 	Status    AuthenticationStatus
 	Role      constants.Role
@@ -53,9 +51,11 @@ type Authentication struct {
 	Email     string
 }
 
+type AuthenticationStatus string
+
 const (
-	Authorized   = "Authorized"
-	Unauthorized = "Unauthorized"
+	Authorized   AuthenticationStatus = "Authorized"
+	Unauthorized AuthenticationStatus = "Unauthorized"
 )
 
 func IsRoot(c *gin.Context, next func(c *gin.Context, account core.Account)) {

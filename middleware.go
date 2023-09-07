@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/boardware-cloud/common/code"
 	"github.com/boardware-cloud/common/constants"
-	"github.com/boardware-cloud/common/errors"
 	"github.com/boardware-cloud/common/utils"
 	"github.com/boardware-cloud/model"
 	"github.com/boardware-cloud/model/core"
@@ -62,7 +62,7 @@ func IsRoot(c *gin.Context, next func(c *gin.Context, account core.Account)) {
 	GetAccount(c,
 		func(c *gin.Context, account core.Account) {
 			if account.Role != constants.ROOT {
-				errors.PermissionError().GinHandler(c)
+				code.GinHandler(c, code.ErrPermissionDenied)
 				return
 			}
 			next(c, account)
@@ -72,7 +72,7 @@ func IsRoot(c *gin.Context, next func(c *gin.Context, account core.Account)) {
 func GetAccount(c *gin.Context, next func(c *gin.Context, account core.Account)) {
 	auth := Authorize(c)
 	if auth.Status != Authorized {
-		errors.UnauthorizedError().GinHandler(c)
+		code.GinHandler(c, code.ErrUnauthorized)
 		return
 	}
 	var account core.Account

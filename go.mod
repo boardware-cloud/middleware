@@ -3,8 +3,8 @@ module github.com/boardware-cloud/middleware
 go 1.20
 
 require (
-	github.com/boardware-cloud/common v0.0.0-20230907014044-1fc0a07427c0
-	github.com/boardware-cloud/model v0.0.0-20230906090719-1c13358bb0c2
+	github.com/boardware-cloud/common v0.0.0-20230914072942-652098073466
+	github.com/boardware-cloud/model v0.0.0-20230914073523-85ff82d4902d
 	github.com/gin-gonic/gin v1.9.1
 	github.com/spf13/viper v1.16.0
 	gorm.io/gorm v1.25.4

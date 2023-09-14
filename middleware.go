@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/boardware-cloud/common/code"
-	"github.com/boardware-cloud/common/constants"
+	constants "github.com/boardware-cloud/common/constants/account"
 	"github.com/boardware-cloud/common/utils"
 	"github.com/boardware-cloud/model"
 	"github.com/boardware-cloud/model/core"

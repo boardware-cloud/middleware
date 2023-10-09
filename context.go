@@ -12,10 +12,8 @@ func Auth() gin.HandlerFunc {
 		auth := Authorize(c)
 		fmt.Println(auth)
 		if auth.Status == Authorized {
-			var account core.Account
-			core.FindAccount(auth.AccountId)
+			account, _ := core.FindAccount(auth.AccountId)
 			c.Set("account", account)
-			return
 		}
 		c.Next()
 	}

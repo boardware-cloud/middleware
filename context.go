@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"fmt"
+
 	"github.com/boardware-cloud/common/code"
 	"github.com/boardware-cloud/model/core"
 	"github.com/gin-gonic/gin"
@@ -9,6 +11,7 @@ import (
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		auth := Authorize(c)
+		fmt.Println(auth)
 		if auth.Status != Authorized {
 			code.GinHandler(c, code.ErrUnauthorized)
 			c.Next()

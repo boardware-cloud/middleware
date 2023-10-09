@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"github.com/boardware-cloud/model"
+	"github.com/boardware-cloud/model/core"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -32,8 +33,8 @@ func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		auth := Authorize(c)
 		if auth.Status == Authorized {
-			// account, _ := core.FindAccount(auth.AccountId)
-			// c.Set("account", core.Account{Email: "good"})
+			account, _ := core.FindAccount(auth.AccountId)
+			c.Set("account", account)
 		}
 		c.Next()
 	}

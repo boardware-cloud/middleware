@@ -2,9 +2,7 @@ package middleware
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/boardware-cloud/common/code"
 	constants "github.com/boardware-cloud/common/constants/account"
@@ -66,17 +64,20 @@ func GetAccount(c *gin.Context, next func(c *gin.Context, account core.Account))
 }
 
 func Authorize(c *gin.Context) Authentication {
-	var headers Headers
-	c.ShouldBindHeader(&headers)
-	authorization := headers.Authorization
-	splited := strings.Split(authorization, " ")
-	fmt.Println(splited)
-	if authorization == "" || len(splited) != 2 {
-		return Authentication{
-			Status: Unauthorized,
-		}
+	return Authentication{
+		Status: Unauthorized,
 	}
-	return AuthorizeByJWT(splited[1])
+	// var headers Headers
+	// c.ShouldBindHeader(&headers)
+	// authorization := headers.Authorization
+	// splited := strings.Split(authorization, " ")
+	// fmt.Println(splited)
+	// if authorization == "" || len(splited) != 2 {
+	// 	return Authentication{
+	// 		Status: Unauthorized,
+	// 	}
+	// }
+	// return AuthorizeByJWT(splited[1])
 }
 
 func AuthorizeByJWT(token string) Authentication {

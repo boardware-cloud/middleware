@@ -1,22 +1,16 @@
 package middleware
 
 import (
-	"context"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/boardware-cloud/common/code"
 	constants "github.com/boardware-cloud/common/constants/account"
 	"github.com/boardware-cloud/common/utils"
 	"github.com/boardware-cloud/model/core"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
-
-var db *gorm.DB
-
-func Init(inject context.Context) {
-	db = inject.Value("db").(*gorm.DB)
-}
 
 type health struct {
 	Status string   `json:"status"`
@@ -64,20 +58,17 @@ func GetAccount(c *gin.Context, next func(c *gin.Context, account core.Account))
 }
 
 func Authorize(c *gin.Context) Authentication {
-	return Authentication{
-		Status: Unauthorized,
+	var headers Headers
+	c.ShouldBindHeader(&headers)
+	authorization := headers.Authorization
+	splited := strings.Split(authorization, " ")
+	fmt.Println(splited)
+	if authorization == "" || len(splited) != 2 {
+		return Authentication{
+			Status: Unauthorized,
+		}
 	}
-	// var headers Headers
-	// c.ShouldBindHeader(&headers)
-	// authorization := headers.Authorization
-	// splited := strings.Split(authorization, " ")
-	// fmt.Println(splited)
-	// if authorization == "" || len(splited) != 2 {
-	// 	return Authentication{
-	// 		Status: Unauthorized,
-	// 	}
-	// }
-	// return AuthorizeByJWT(splited[1])
+	return AuthorizeByJWT(splited[1])
 }
 
 func AuthorizeByJWT(token string) Authentication {

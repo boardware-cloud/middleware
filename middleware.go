@@ -1,38 +1,23 @@
 package middleware
 
 import (
+	"context"
+	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/boardware-cloud/common/code"
 	constants "github.com/boardware-cloud/common/constants/account"
 	"github.com/boardware-cloud/common/utils"
-	"github.com/boardware-cloud/model"
 	"github.com/boardware-cloud/model/core"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+var db *gorm.DB
 
-func init() {
-	viper.SetConfigName("env")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./config")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
-	user := viper.GetString("database.user")
-	password := viper.GetString("database.password")
-	host := viper.GetString("database.host")
-	port := viper.GetString("database.port")
-	database := viper.GetString("database.database")
-	DB, err = model.NewConnection(user, password, host, port, database)
-	if err != nil {
-		panic(err)
-	}
+func Init(inject context.Context) {
+	db = inject.Value("db").(*gorm.DB)
 }
 
 type health struct {
@@ -76,7 +61,7 @@ func GetAccount(c *gin.Context, next func(c *gin.Context, account core.Account))
 		return
 	}
 	var account core.Account
-	DB.Find(&account, auth.AccountId)
+	db.Find(&account, auth.AccountId)
 	next(c, account)
 }
 
@@ -85,6 +70,7 @@ func Authorize(c *gin.Context) Authentication {
 	c.ShouldBindHeader(&headers)
 	authorization := headers.Authorization
 	splited := strings.Split(authorization, " ")
+	fmt.Println(splited)
 	if authorization == "" || len(splited) != 2 {
 		return Authentication{
 			Status: Unauthorized,

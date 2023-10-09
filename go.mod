@@ -4,13 +4,14 @@ go 1.20
 
 require (
 	github.com/boardware-cloud/common v0.0.0-20230914072942-652098073466
-	github.com/boardware-cloud/model v0.0.0-20230914073523-85ff82d4902d
+	github.com/boardware-cloud/model v0.0.0-20231009071620-6c9358ef8579
 	github.com/gin-gonic/gin v1.9.1
 	github.com/spf13/viper v1.16.0
 	gorm.io/gorm v1.25.4
 )
 
 require (
+	github.com/Dparty/common v0.0.0-20230929033726-ff769bca8c94 // indirect
 	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/bytedance/sonic v1.10.0 // indirect
 	github.com/chenyunda218/golambda v0.0.0-20230809035428-25245dc9a8bd // indirect

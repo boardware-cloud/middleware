@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -62,7 +61,6 @@ func Authorize(c *gin.Context) Authentication {
 	c.ShouldBindHeader(&headers)
 	authorization := headers.Authorization
 	splited := strings.Split(authorization, " ")
-	fmt.Println(splited)
 	if authorization == "" || len(splited) != 2 {
 		return Authentication{
 			Status: Unauthorized,

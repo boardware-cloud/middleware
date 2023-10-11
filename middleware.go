@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -77,7 +76,6 @@ func AuthorizeByJWT(token string) Authentication {
 			Status: Unauthorized,
 		}
 	}
-	fmt.Println("AuthorizeByJWT:", err)
 	return Authentication{
 		Status:    Authorized,
 		Email:     claims["email"].(string),

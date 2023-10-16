@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/boardware-cloud/common v0.0.0-20231010074109-e48c7fc51b44
-	github.com/boardware-cloud/model v0.0.0-20231009071620-6c9358ef8579
+	github.com/boardware-cloud/model v0.0.0-20231016013431-93811464db0d
 	github.com/gin-gonic/gin v1.9.1
 	github.com/spf13/viper v1.16.0
 	gorm.io/gorm v1.25.4

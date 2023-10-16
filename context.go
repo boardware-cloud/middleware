@@ -9,6 +9,7 @@ import (
 )
 
 var db *gorm.DB
+var accountRepository core.AccountRepository
 
 func init() {
 	viper.SetConfigName("env")
@@ -24,6 +25,7 @@ func init() {
 	port := viper.GetString("database.port")
 	database := viper.GetString("database.database")
 	db, err = model.NewConnection(user, password, host, port, database)
+	accountRepository = core.NewAccountRepository(db)
 	if err != nil {
 		panic(err)
 	}
@@ -33,8 +35,10 @@ func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		auth := Authorize(c)
 		if auth.Status == Authorized {
-			account, _ := core.FindAccount(auth.AccountId)
-			c.Set("account", account)
+			account := accountRepository.GetById(auth.AccountId)
+			if account != nil {
+				c.Set("account", account)
+			}
 		}
 		c.Next()
 	}
